@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class LectApplicationTests {
@@ -71,5 +72,14 @@ class LectApplicationTests {
         List<Question> all = this.QuestionRepository.findByTitleLike("title%");
         Question q = all.get(0);
         assertEquals("title1", q.getTitle());
+    }
+
+    @Test//Edit
+    void test6(){
+        Optional<Question> oq = this.QuestionRepository.findById(1L);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
+        q.setTitle("Edited title");
+        this.QuestionRepository.save(q);
     }
 }
