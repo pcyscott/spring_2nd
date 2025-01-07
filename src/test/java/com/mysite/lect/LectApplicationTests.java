@@ -43,4 +43,5 @@ class LectApplicationTests {
         Question q2 = all.get(1);
         assertEquals("title2", q2.getTitle());
     }
+
 }
