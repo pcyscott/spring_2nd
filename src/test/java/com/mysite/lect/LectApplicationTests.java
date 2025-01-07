@@ -111,4 +111,11 @@ class LectApplicationTests {
 
     }
 
+    @Test//findAnswer
+    void test9(){
+        Optional<Answer> oa = this.answerRepository.findById(1L);
+        assertTrue(oa.isPresent());
+        Answer a = oa.get();
+        assertEquals(2L,a.getQuestion().getId());
+    }
 }
