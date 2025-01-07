@@ -1,5 +1,6 @@
 package com.mysite.lect;
 
+import com.mysite.lect.Answer.AnswerRepository;
 import com.mysite.lect.Question.Question;
 import com.mysite.lect.Question.QuestionRepository;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ class LectApplicationTests {
 
     @Autowired
     private QuestionRepository QuestionRepository;
+    private AnswerRepository answerRepository;
 
     @Test
     void testJpa(){
@@ -82,4 +84,16 @@ class LectApplicationTests {
         q.setTitle("Edited title");
         this.QuestionRepository.save(q);
     }
+
+    @Test//Delete
+    void test7(){
+        assertEquals(2,this.QuestionRepository.count());
+        Optional<Question> oq = this.QuestionRepository.findById(1L);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
+        this.QuestionRepository.delete(q);
+        assertEquals(1, this.QuestionRepository.count());
+    }
+
+
 }
