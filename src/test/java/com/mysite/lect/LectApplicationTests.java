@@ -7,6 +7,7 @@ import com.mysite.lect.Question.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -117,5 +118,18 @@ class LectApplicationTests {
         assertTrue(oa.isPresent());
         Answer a = oa.get();
         assertEquals(2L,a.getQuestion().getId());
+    }
+
+    @Test//transactional
+    @Transactional
+    void test10(){
+        Optional<Question> oq = this.QuestionRepository.findById(2L);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
+
+        List<Answer> answerList = q.getAnswerList();
+
+        assertEquals(1, answerList.size());
+        assertEquals("Answer1", answerList.get(0).getContent());
     }
 }
