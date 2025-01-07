@@ -53,4 +53,10 @@ class LectApplicationTests {
             assertEquals("title1", q.getTitle());
         }
     }
+
+    @Test//findbysubject
+    void test3(){
+        Question q = this.QuestionRepository.findByContent("content1");
+        assertEquals(1L, q.getId());
+    }
 }
