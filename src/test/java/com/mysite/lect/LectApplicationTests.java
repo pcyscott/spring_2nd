@@ -59,4 +59,10 @@ class LectApplicationTests {
         Question q = this.QuestionRepository.findByContent("content1");
         assertEquals(1L, q.getId());
     }
+
+    @Test//findbycontentandtitle
+    void test4(){
+        Question q = this.QuestionRepository.findByContentAndTitle("content1", "title1");
+        assertEquals(1L, q.getId());
+    }
 }

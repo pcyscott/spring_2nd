@@ -8,4 +8,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findAllByOrderByIdDesc();
 
     Question findByContent(String content);
+
+    Question findByContentAndTitle(String content, String title);
 }
