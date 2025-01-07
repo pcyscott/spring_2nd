@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,4 +45,12 @@ class LectApplicationTests {
         assertEquals("title2", q2.getTitle());
     }
 
+    @Test//finbyid
+    void test2(){
+        Optional<Question> oq = this.QuestionRepository.findById(1L);
+        if(oq.isPresent()){
+            Question q = oq.get();
+            assertEquals("title1", q.getTitle());
+        }
+    }
 }
