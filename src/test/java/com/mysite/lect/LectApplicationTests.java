@@ -1,5 +1,6 @@
 package com.mysite.lect;
 
+import com.mysite.lect.Answer.Answer;
 import com.mysite.lect.Answer.AnswerRepository;
 import com.mysite.lect.Question.Question;
 import com.mysite.lect.Question.QuestionRepository;
@@ -19,6 +20,7 @@ class LectApplicationTests {
 
     @Autowired
     private QuestionRepository QuestionRepository;
+    @Autowired
     private AnswerRepository answerRepository;
 
     @Test
@@ -95,5 +97,18 @@ class LectApplicationTests {
         assertEquals(1, this.QuestionRepository.count());
     }
 
+    @Test//saveAnswer
+    void test8(){
+       Optional<Question> oq = this.QuestionRepository.findById(2L);
+       assertTrue(oq.isPresent());
+       Question q = oq.get();
+
+       Answer a = new Answer();
+       a.setContent("Answer1");
+       a.setQuestion(q);
+       a.setCreateTime(LocalDateTime.now());
+       this.answerRepository.save(a);
+
+    }
 
 }
