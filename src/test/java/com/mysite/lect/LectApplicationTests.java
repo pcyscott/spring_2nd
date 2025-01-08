@@ -4,6 +4,7 @@ import com.mysite.lect.Answer.Answer;
 import com.mysite.lect.Answer.AnswerRepository;
 import com.mysite.lect.Question.Question;
 import com.mysite.lect.Question.QuestionRepository;
+import com.mysite.lect.Question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,8 @@ class LectApplicationTests {
     private QuestionRepository QuestionRepository;
     @Autowired
     private AnswerRepository answerRepository;
+    @Autowired
+    private QuestionService qestionService;
 
     @Test
     void testJpa(){
@@ -131,5 +134,14 @@ class LectApplicationTests {
 
         assertEquals(1, answerList.size());
         assertEquals("Answer1", answerList.get(0).getContent());
+    }
+
+    @Test
+    void testJpa11(){
+        for(int i=1; i<=150; i++){
+            String title = String.format("Test data version %d", i);
+            String content = String.format("Test data: content %d", i);
+            this.qestionService.create(title, content);
+        }
     }
 }
