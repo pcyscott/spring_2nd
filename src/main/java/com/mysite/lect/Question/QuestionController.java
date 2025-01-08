@@ -1,5 +1,6 @@
 package com.mysite.lect.Question;
 
+import com.mysite.lect.Answer.AnswerForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,24 +25,25 @@ public class QuestionController {
         return "question_list";
     }
 
-    @GetMapping(value="/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Long id) {
-        Question question = this.questionService.getQuestion(id);
-        model.addAttribute("question", question);
-        return "question_detail";
-    }
+    @GetMapping(value = "/detail/{id}")
+    public String detail(Model model, @PathVariable("id") Long id, AnswerForm answerForm) {
+            Question question = this.questionService.getQuestion(id);
+            model.addAttribute("question", question);
+            return "question_detail";
+        }
 
-    @GetMapping("/create")
-    public String questionCreate(QuestionForm questionForm){
-        return "question_form";
-    }
-
-    @PostMapping("/create")
-    public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+        @GetMapping("/create")
+        public String questionCreate (QuestionForm questionForm){
             return "question_form";
         }
-        this.questionService.create(questionForm.getTitle(), questionForm.getContent());
-        return "redirect:/question/list";
+
+        @PostMapping("/create")
+        public String questionCreate (@Valid QuestionForm questionForm, BindingResult bindingResult){
+            if (bindingResult.hasErrors()) {
+                return "question_form";
+            }
+            this.questionService.create(questionForm.getTitle(), questionForm.getContent());
+            return "redirect:/question/list";
+        }
     }
-}
+
