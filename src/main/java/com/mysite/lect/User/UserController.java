@@ -2,6 +2,7 @@ package com.mysite.lect.User;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,20 @@ public class UserController {
                     "비밀번호가 일치하지 않습니다.");
             return "signup_form";
         }
-        userService.create(userCreateForm.getUserId(),
-                userCreateForm.getEmail(), userCreateForm.getPassword());
+
+        try {
+            userService.create(userCreateForm.getUserId(),
+                    userCreateForm.getEmail(), userCreateForm.getPassword());
+        } catch (DataIntegrityViolationException e){
+            e.printStackTrace();
+            bindingResult.reject("signupError", "이미 가입된 이메일이거나 아이디입니다.");
+            return "signup_form";
+        }catch (Exception e){
+            e.printStackTrace();
+            bindingResult.reject("signupError", e.getMessage());
+            return "signup_form";
+        }
+
         return "redirect:/";
     }
 }
