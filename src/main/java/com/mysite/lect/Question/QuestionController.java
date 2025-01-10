@@ -68,5 +68,20 @@ public class QuestionController {
         questionForm.setContent(question.getContent());
         return "question_form";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modify/{id}")
+    public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal,
+                                 @PathVariable Long id){
+        if(bindingResult.hasErrors()){
+            return "question_form";
+        }
+        Question q = this.questionService.getQuestion(id);
+        if(!q.getAuthor().getUsername().equals(principal.getName())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정 권환이 없습니다.");
+        }
+        this.questionService.modify(q,questionForm.getTitle(),questionForm.getContent());
+        return String.format("redirect:/question/detail/%s",id);
+    }
 }
 
