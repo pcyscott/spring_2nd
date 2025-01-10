@@ -1,5 +1,6 @@
 package com.mysite.lect.Question;
 
+import com.mysite.lect.User.SiteUser;
 import com.mysite.lect.Util.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,11 +35,12 @@ public class QuestionService {
         }
     }
 
-    public void create(String title, String content){
+    public void create(String title, String content, SiteUser user){
         Question question = new Question();
         question.setTitle(title);
         question.setContent(content);
         question.setCreateTime(LocalDateTime.now());
+        question.setAuthor(user);
         this.questionRepository.save(question);
     }
 }

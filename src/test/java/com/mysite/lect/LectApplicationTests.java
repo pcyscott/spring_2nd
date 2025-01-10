@@ -141,7 +141,7 @@ class LectApplicationTests {
         for(int i=1; i<=150; i++){
             String title = String.format("Test data version %d", i);
             String content = String.format("Test data: content %d", i);
-            this.qestionService.create(title, content);
+            this.qestionService.create(title, content,null);
         }
     }
 }
